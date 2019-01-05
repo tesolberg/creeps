@@ -1,5 +1,5 @@
 
-var helpersCreep = {
+var creep_helper = {
     
     getEnergyFromContainer: function (creep) {
             var target = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -11,4 +11,4 @@ var helpersCreep = {
     }
 }
 
-module.exports = helpersCreep;
+module.exports = creep_helper;

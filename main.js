@@ -1,21 +1,23 @@
-var balancePop = require("balance.pop");
 var visualsSpawn = require("visuals.spawn");
-var roleMaster = require("role.master");
-var defenseTower = require("defense.tower");
+var creep_manager = require("creep_manager");
 
 module.exports.loop = function() {
     
-    // Creep population maintenance
-    balancePop.run();
+
     
     // Visualisations
     visualsSpawn.run();
     
     // Creep roles logic
-    roleMaster.run();
+    creep_manager.run();
     
-    // Defense
-    //defenceTower.run();
-
+    // Garbage recycling
+    for (var name in Memory.creeps) {
+        if (!Game.creeps[name]) {
+            delete Memory.creeps[name];
+            console.log("Clearing non-existing creep memory: " + name);
+        }
+    }
+    
 
 }

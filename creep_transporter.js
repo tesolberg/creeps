@@ -1,10 +1,11 @@
-var creep_helper = require("creep_helpers");
+var creep_helpers = require("creep_helpers");
 
-var roleTransporter = {
+var transporter = {
 
     run: function (creep) {
         if (creep.carry.energy == 0) {
-            creep_helper.getEnergyFromContainer(creep);
+            creep_helpers
+        .getEnergyFromContainer(creep);
         }
         else {
             var targets = creep.pos.findClosestByPath(FIND_STRUCTURES, {
@@ -21,8 +22,18 @@ var roleTransporter = {
             }
             // Add idle goto position
         }
+    },
+
+    spawn_creep: function() {
+        var e = Game.spawns["Spawn1"].room.energyCapacity;
+        if (e >= 500) {
+            Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
+            }
+        else {
+            Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
+        }
     }
 }
 
 
-module.exports = roleTransporter;
+module.exports = transporter;
