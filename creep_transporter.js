@@ -25,8 +25,11 @@ var transporter = {
     },
 
     spawn_creep: function() {
-        var e = Game.spawns["Spawn1"].room.energyCapacity;
-        if (e >= 500) {
+        var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
+        if (e >= 800) {
+            Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
+            }
+        else if (e >= 500) {
             Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
             }
         else {

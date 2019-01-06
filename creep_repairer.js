@@ -24,14 +24,14 @@ var repairer = {
                 filter: (structure) => structure.hits < structure.hitsMax && structure.hits < system_constants.utilities.repair_threshold});
             if (closestDamagedStructure) {
                 if(creep.repair(closestDamagedStructure) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(closestDamagedStructure);
+                    creep.moveTo(closestDamagedStructure, {visualizePathStyle: {stroke: '#ffaaaa'}});
                 }
             }
         }
     },
 
     spawn_creep: function() {
-        var e = Game.spawns["Spawn1"].room.energyCapacity;
+        var e = Game.spawns["Spawn1"].room.energyAvailable;
         if (e >= 550) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE], "Repairer_" + Game.time, {memory: {role: "repairer"}});
             }

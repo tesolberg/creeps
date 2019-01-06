@@ -17,7 +17,5 @@ module.exports.loop = function() {
             delete Memory.creeps[name];
             console.log("Clearing non-existing creep memory: " + name);
         }
-    }
-    
-
+    }    
 }

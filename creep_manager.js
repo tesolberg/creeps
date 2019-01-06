@@ -6,6 +6,8 @@ var miner = require("creep_miner");
 var system_constants = require("system_constants");
 var creep_helpers = require("creep_helpers");
 
+// E35N42
+
 var creep_manager = {
     
     run: function() {

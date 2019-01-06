@@ -4,9 +4,9 @@ var bootstrapping = false;
 var repair_threshold = 50000;
 
 // Creep population targets
-const miners = 3;
-const transporters = 2;
-const builders = 2;
+const miners = 2;
+const transporters = 3;
+const builders = 3;
 const repairers = 1;
 
 var population_targets = {
@@ -24,3 +24,6 @@ var utilities = {
 }
 
 module.exports = {population_targets, bootstrapping: bootstrapping, utilities};
+
+// 5bbcaef89099fc012e639e5e
+// 5bbcaef89099fc012e639e5d
