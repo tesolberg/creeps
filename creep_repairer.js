@@ -31,7 +31,7 @@ var repairer = {
     },
 
     spawn_creep: function() {
-        var e = Game.spawns["Spawn1"].room.energyAvailable;
+        var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
         if (e >= 550) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,CARRY,MOVE,MOVE,MOVE,MOVE], "Repairer_" + Game.time, {memory: {role: "repairer"}});
             }

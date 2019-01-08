@@ -2,9 +2,13 @@
 var creep_helpers = {
     
     getEnergyFromContainer: function (creep) {
-        if (!creep.memory.resourceTarget || creep.memory.resourceTarget.store[RESOURCE_ENERGY] < creep.carryCapacity) {
+        if (!creep.memory.resourceTarget) {
             this.get_new_energy_target(creep);
         }
+        if (creep.memory.resourceTarget && 
+            Game.getObjectById(creep.memory.resourceTarget.id).store[RESOURCE_ENERGY] < creep.carryCapacity) {
+                this.get_new_energy_target(creep);
+            }
 
         if(creep.memory.resourceTarget){
             var target = Game.getObjectById(creep.memory.resourceTarget.id);

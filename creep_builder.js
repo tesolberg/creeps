@@ -35,7 +35,7 @@ var roleBuilder = {
     },
     
     spawn_creep: function() {
-        var e = Game.spawns["Spawn1"].room.energyAvailable;
+        var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
         if (e >= 800) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], "Builder_" + Game.time, {memory: {role: "builder"}});
             }

@@ -1,3 +1,4 @@
+var system_constants = require("system_constants");
 
 var miner = {
     
@@ -40,17 +41,15 @@ var miner = {
     spawn_creep: function() {
         var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
 
-        if (e >= 800) {
+        if (e >= 800 && !Memory.bootstrapping) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,WORK,WORK,WORK,CARRY,CARRY,CARRY,MOVE], "Miner_" + Game.time, {memory: {role: "miner"}});
         }
-        else if (e >= 500) {
+        else if (e >= 500 && !Memory.bootstrapping) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,WORK,CARRY,MOVE], "Miner_" + Game.time, {memory: {role: "miner"}});
             }
         else {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,CARRY,MOVE], "Miner_" + Game.time, {memory: {role: "miner"}});
         }
-
-
     }
 }
 

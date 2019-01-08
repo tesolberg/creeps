@@ -8,11 +8,14 @@ var creep_helpers = require("creep_helpers");
 
 // E35N42
 
+Memory.bootstrapping = false;
+
 var creep_manager = {
     
     run: function() {
         maintain_population();
         run_creeps();
+        check_bootstrapping();
     }
 }
 
@@ -44,42 +47,51 @@ function run_creeps() {
 
 function maintain_population() {
         var bootstrappers = _.filter(Game.creeps, (creep) => creep.memory.role == "bootstrapper");
-        if (system_constants.bootstrapping && bootstrappers.length < 1) {
+        if (Memory.bootstrapping && bootstrappers.length < 2) {
             bootstrapper.spawn_creep();
         }
         else {
-            // Transporters
-            var transporters = _.filter(Game.creeps, (creep) => creep.memory.role == "transporter");
-            if (transporters.length < system_constants.population_targets.transporters) {
-                transporter.spawn_creep();
-            }
-            // Miners
             var miners = _.filter(Game.creeps, (creep) => creep.memory.role == "miner");
+            var transporters = _.filter(Game.creeps, (creep) => creep.memory.role == "transporter");
+            var builders = _.filter(Game.creeps, (creep) => creep.memory.role == "builder");
+            var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == "repairer");
+            
+            //  Miners
             if (miners.length < system_constants.population_targets.miners) {
                 miner.spawn_creep();
             }
-            var builders = _.filter(Game.creeps, (creep) => creep.memory.role == "builder");
-            if (builders.length < system_constants.population_targets.builders) {
-                builder.spawn_creep();
+            // Transporters
+            else if (transporters.length < system_constants.population_targets.transporters) {
+                transporter.spawn_creep();
             }
-            var repairers = _.filter(Game.creeps, (creep) => creep.memory.role == "repairer");
-            if (repairers.length < system_constants.population_targets.repairers) {
+            // Repairers
+            else if (!Memory.bootstrapping && repairers.length < system_constants.population_targets.repairers) {
                 repairer.spawn_creep();
             }
+            // Builders
+            else if (!Memory.bootstrapping && builders.length < system_constants.population_targets.builders) {
+                builder.spawn_creep();
+            }
         }
-        
-  
-        
-
-        
     }
 
 function check_bootstrapping() {
-    var e = Game.spawns["Spawn1"].room.energyAvailable;
-    if (system_constants.utilities.bootstrapping && e >= 550) {
-        system_constants.utilities.bootstrapping = false;
-    }
+    var miners = _.filter(Game.creeps, (creep) => creep.memory.role == "miner").length;
+    var transporters = _.filter(Game.creeps, (creep) => creep.memory.role == "transporter").length;
+    console.log("Miners: " + miners + ". Transporters: " + transporters + ". Bootstrapping: " + Memory.bootstrapping);
 
+    if (Memory.bootstrapping &&
+        miners == system_constants.population_targets.miners &&
+        transporters == system_constants.population_targets.transporters) {
+        Memory.bootstrapping = false;
+        console.log("Bootstrapping set to false");
+    }
+    else if (!Memory.bootstrapping &&
+        miners == 0 &&
+        transporters == 0) {
+        Memory.bootstrapping = true;
+        console.log("Bootstrapping set to true");
+    }
 }
 
 module.exports = creep_manager;

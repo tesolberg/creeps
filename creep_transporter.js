@@ -1,4 +1,5 @@
 var creep_helpers = require("creep_helpers");
+var system_constants = require("system_constants");
 
 var transporter = {
 
@@ -26,10 +27,10 @@ var transporter = {
 
     spawn_creep: function() {
         var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
-        if (e >= 800) {
+        if (e >= 800 && !Memory.bootstrapping) {
             Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
             }
-        else if (e >= 500) {
+        else if (e >= 500 && !Memory.bootstrapping) {
             Game.spawns["Spawn1"].spawnCreep([CARRY,CARRY,CARRY,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE], "Transporter_" + Game.time, {memory: {role: "transporter"}});
             }
         else {
