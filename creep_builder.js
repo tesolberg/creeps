@@ -8,7 +8,7 @@ var roleBuilder = {
         if (!creep.memory.harvesting && creep.carry.energy == 0) {
             creep.say("⚡");
             creep.memory.harvesting = true;
-            creep_helpers.get_new_energy_target(creep);
+            creep_helpers.get_new_energy_storage(creep);
         }
         else if (creep.carry.energy == creep.carryCapacity && creep.memory.harvesting) {
             creep.say("⚒️");
@@ -16,7 +16,7 @@ var roleBuilder = {
         }
         
         if (creep.memory.harvesting == true) {
-            creep_helpers.getEnergyFromContainer(creep);
+            creep_helpers.getEnergyFromStorage(creep);
         }
         else {
             var build_projects = creep.room.find(FIND_CONSTRUCTION_SITES);
@@ -36,7 +36,14 @@ var roleBuilder = {
     
     spawn_creep: function() {
         var e = Game.spawns["Spawn1"].room.energyCapacityAvailable;
-        if (e >= 800) {
+        if (e >= 1300) {
+            Game.spawns["Spawn1"].spawnCreep([
+                WORK,WORK,WORK,WORK,WORK,WORK,                      // 6 x 100 = 600
+                CARRY,CARRY,CARRY,CARRY,                            // 4 x  50 = 200
+                MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], // 10 x 50 = 500
+                "Builder_" + Game.time, {memory: {role: "builder"}});
+            }
+        else if (e >= 800) {
             Game.spawns["Spawn1"].spawnCreep([WORK,WORK,WORK,WORK,CARRY,CARRY,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], "Builder_" + Game.time, {memory: {role: "builder"}});
             }
         else if (e >= 550) {

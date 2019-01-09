@@ -6,8 +6,6 @@ var miner = require("creep_miner");
 var system_constants = require("system_constants");
 var creep_helpers = require("creep_helpers");
 
-// E35N42
-
 Memory.bootstrapping = false;
 
 var creep_manager = {
@@ -47,7 +45,7 @@ function run_creeps() {
 
 function maintain_population() {
         var bootstrappers = _.filter(Game.creeps, (creep) => creep.memory.role == "bootstrapper");
-        if (Memory.bootstrapping && bootstrappers.length < 2) {
+        if (Memory.bootstrapping && bootstrappers.length < 1) {
             bootstrapper.spawn_creep();
         }
         else {
@@ -78,7 +76,6 @@ function maintain_population() {
 function check_bootstrapping() {
     var miners = _.filter(Game.creeps, (creep) => creep.memory.role == "miner").length;
     var transporters = _.filter(Game.creeps, (creep) => creep.memory.role == "transporter").length;
-    console.log("Miners: " + miners + ". Transporters: " + transporters + ". Bootstrapping: " + Memory.bootstrapping);
 
     if (Memory.bootstrapping &&
         miners == system_constants.population_targets.miners &&
@@ -87,8 +84,8 @@ function check_bootstrapping() {
         console.log("Bootstrapping set to false");
     }
     else if (!Memory.bootstrapping &&
-        miners == 0 &&
-        transporters == 0) {
+        (miners == 0 &&
+        transporters == 0)) {
         Memory.bootstrapping = true;
         console.log("Bootstrapping set to true");
     }

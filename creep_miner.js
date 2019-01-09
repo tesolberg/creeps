@@ -32,7 +32,7 @@ var miner = {
                 }
                 // If dropoff successful
                 else {
-                    check_source_target(creep);
+                    //check_source_target(creep);
                 }
             }
         }

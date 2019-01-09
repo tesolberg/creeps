@@ -17,7 +17,7 @@ var repairer = {
         
         
         if (creep.memory.harvesting == true) {
-            creep_helpers.getEnergyFromContainer(creep); 
+            creep_helpers.getEnergyFromStorage(creep); 
         }
         else {
             var closestDamagedStructure = creep.pos.findClosestByPath(FIND_STRUCTURES, {
